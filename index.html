@@ -7,115 +7,127 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
+  :root {
+    --bg: #f7f7f5;
+    --card: #ffffff;
+    --accent: #f4a825;
+    --accent2: #3d7ebf;
+    --text: #1a1a1a;
+    --muted: #999;
+    --border: #e8e8e8;
+    --done-bg: #edf6ec;
+    --done-fg: #4caf50;
+  }
+
   body {
-    font-family: 'Hiragino Maru Gothic ProN', 'BIZ UDPGothic', sans-serif;
-    background: linear-gradient(135deg, #fff9c4 0%, #b3e5fc 100%);
+    font-family: -apple-system, 'Hiragino Sans', 'BIZ UDPGothic', sans-serif;
+    background: var(--bg);
     min-height: 100vh;
-    padding: 12px;
+    padding: 16px 12px 32px;
+    color: var(--text);
   }
 
-  h1 {
-    text-align: center;
-    font-size: 1.5rem;
-    color: #f57c00;
-    text-shadow: 2px 2px 0 #ffe082;
-    margin-bottom: 6px;
+  /* ===== HEADER ===== */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
   }
+  header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  header .year { font-size: 0.75rem; color: var(--muted); }
 
-  /* ========== PROGRESS BAR ========== */
+  /* ===== PROGRESS ===== */
   #progress-wrap {
-    background: white;
-    border-radius: 20px;
-    padding: 10px 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    text-align: center;
+    background: var(--card);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
   }
-  #progress-label {
-    font-size: 0.85rem;
-    color: #555;
-    margin-bottom: 6px;
+  .progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
   }
+  .progress-label { font-size: 0.78rem; color: var(--muted); }
+  #progress-count { font-size: 0.85rem; font-weight: 600; color: var(--accent); }
   #progress-bar-outer {
-    background: #e0e0e0;
-    border-radius: 20px;
-    height: 22px;
+    background: var(--border);
+    border-radius: 99px;
+    height: 6px;
     overflow: hidden;
   }
   #progress-bar-inner {
-    background: linear-gradient(90deg, #ffeb3b, #ff9800);
+    background: var(--accent);
     height: 100%;
-    border-radius: 20px;
-    transition: width 0.5s ease;
-    min-width: 0;
-  }
-  #progress-count {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #e65100;
-    margin-top: 4px;
+    border-radius: 99px;
+    transition: width 0.4s ease;
   }
 
-  /* ========== TABS ========== */
+  /* ===== TABS ===== */
   .tabs {
     display: flex;
-    gap: 6px;
-    margin-bottom: 10px;
-    justify-content: center;
+    background: var(--border);
+    border-radius: 10px;
+    padding: 3px;
+    margin-bottom: 14px;
   }
   .tab-btn {
     flex: 1;
-    max-width: 140px;
-    padding: 10px 0;
+    padding: 8px 0;
     border: none;
-    border-radius: 16px;
-    font-size: 0.95rem;
-    font-weight: bold;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
     cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.1s;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+    transition: background 0.15s, color 0.15s;
   }
-  .tab-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
-  .tab-btn.active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); opacity: 1; }
-  #tab-calendar { background: #81d4fa; color: #01579b; }
-  #tab-tasks    { background: #a5d6a7; color: #1b5e20; }
-  #tab-calendar.active { background: #0288d1; color: white; }
-  #tab-tasks.active    { background: #388e3c; color: white; }
+  .tab-btn.active {
+    background: var(--card);
+    color: var(--text);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
 
   .section { display: none; }
   .section.active { display: block; }
 
-  /* ========== CALENDAR ========== */
-  .month-title {
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #0277bd;
-    margin-bottom: 8px;
-  }
+  /* ===== CALENDAR ===== */
   .cal-card {
-    background: white;
-    border-radius: 16px;
-    padding: 10px;
+    background: var(--card);
+    border-radius: 14px;
+    padding: 14px 12px;
     margin-bottom: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+  }
+  .month-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
   }
   .cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 3px;
+    gap: 2px;
   }
   .cal-header {
     text-align: center;
-    font-size: 0.75rem;
-    font-weight: bold;
-    padding: 4px 0;
-    border-radius: 6px;
-    background: #e3f2fd;
-    color: #555;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 3px 0 6px;
   }
-  .cal-header:first-child { color: #e53935; }
-  .cal-header:last-child  { color: #1976d2; }
+  .cal-header:first-child { color: #e05252; }
+  .cal-header:last-child  { color: var(--accent2); }
 
   .cal-day {
     aspect-ratio: 1;
@@ -123,57 +135,62 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
     cursor: pointer;
-    font-size: 0.9rem;
-    position: relative;
-    transition: transform 0.1s;
     user-select: none;
+    transition: transform 0.1s;
+    position: relative;
   }
-  .cal-day:active { transform: scale(0.9); }
+  .cal-day:active { transform: scale(0.88); }
   .cal-day.empty { cursor: default; }
+  .cal-day.not-summer { color: #ddd; cursor: default; }
+  .cal-day.summer { color: var(--text); }
+  .cal-day.done {
+    background: var(--done-bg);
+    color: var(--done-fg);
+    font-weight: 700;
+  }
   .cal-day.today {
-    background: #ffe082 !important;
-    font-weight: bold;
-    box-shadow: 0 0 0 2px #f57c00;
+    background: var(--accent) !important;
+    color: white !important;
+    font-weight: 700;
   }
-  .cal-day.done { background: #a5d6a7; }
-  .cal-day.summer { background: #e3f2fd; }
-  .cal-day.weekend-sun { color: #e53935; }
-  .cal-day.weekend-sat { color: #1976d2; }
-  .cal-day .check-mark {
-    font-size: 1rem;
-    line-height: 1;
+  .cal-day.weekend-sun.summer { color: #e05252; }
+  .cal-day.weekend-sat.summer { color: var(--accent2); }
+  .cal-day.done .dot,
+  .cal-day.summer .dot { display: none; }
+  .done-mark {
+    font-size: 0.55rem;
+    margin-top: 1px;
+    opacity: 0.8;
   }
-  .cal-day .day-num { font-size: 0.8rem; line-height: 1; }
 
   .cal-legend {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 8px;
-    font-size: 0.7rem;
-    color: #555;
-    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+    font-size: 0.68rem;
+    color: var(--muted);
   }
-  .legend-dot {
+  .legend-swatch {
     display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
     vertical-align: middle;
     margin-right: 3px;
   }
 
-  /* ========== TASKS ========== */
-  .task-category {
-    margin-bottom: 14px;
-  }
+  /* ===== TASKS ===== */
+  .task-category { margin-bottom: 16px; }
   .cat-title {
-    font-size: 0.95rem;
-    font-weight: bold;
-    padding: 6px 12px;
-    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
     margin-bottom: 6px;
     display: flex;
     align-items: center;
@@ -181,139 +198,138 @@
   }
   .cat-title .cat-count {
     margin-left: auto;
-    font-size: 0.8rem;
-    background: rgba(255,255,255,0.5);
-    border-radius: 10px;
-    padding: 1px 8px;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 600;
   }
 
   .task-item {
-    background: white;
-    border-radius: 14px;
-    padding: 12px 14px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 13px 14px;
     margin-bottom: 6px;
     display: flex;
     align-items: center;
     gap: 12px;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    transition: transform 0.1s;
+    border: 1px solid var(--border);
+    transition: transform 0.1s, opacity 0.15s;
     user-select: none;
   }
   .task-item:active { transform: scale(0.97); }
+  .task-item.done { opacity: 0.55; }
+
   .task-check {
-    width: 32px;
-    height: 32px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    border: 3px solid #ccc;
+    border: 2px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
     flex-shrink: 0;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    font-size: 0.7rem;
   }
   .task-item.done .task-check {
-    background: #66bb6a;
-    border-color: #66bb6a;
+    background: var(--done-fg);
+    border-color: var(--done-fg);
     color: white;
   }
   .task-text {
-    font-size: 0.95rem;
-    color: #333;
-    line-height: 1.3;
+    font-size: 0.92rem;
+    font-weight: 500;
   }
   .task-item.done .task-text {
     text-decoration: line-through;
-    color: #aaa;
+    color: var(--muted);
   }
-  .task-emoji { font-size: 1.2rem; }
 
-  /* Add task button */
+  /* Add button */
   #add-task-btn {
     width: 100%;
-    padding: 12px;
-    background: linear-gradient(90deg, #ffb74d, #ff8a65);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-size: 1rem;
-    font-weight: bold;
+    padding: 13px;
+    background: var(--card);
+    color: var(--accent);
+    border: 2px dashed var(--accent);
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 8px;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.15);
-    transition: transform 0.1s;
+    margin-top: 4px;
+    transition: background 0.15s;
   }
-  #add-task-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  #add-task-btn:active { background: #fdf3e0; }
 
-  /* Modal */
+  /* ===== MODAL ===== */
   #modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.3);
     z-index: 100;
     align-items: flex-end;
     justify-content: center;
+    backdrop-filter: blur(2px);
   }
   #modal-overlay.show { display: flex; }
   #modal-box {
-    background: white;
-    border-radius: 24px 24px 0 0;
-    padding: 20px 16px 32px;
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 36px;
     width: 100%;
     max-width: 480px;
     animation: slideUp 0.2s ease;
   }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-  #modal-box h3 { text-align: center; margin-bottom: 14px; color: #444; }
+  #modal-box h3 { text-align: center; margin-bottom: 16px; font-size: 0.95rem; color: var(--muted); font-weight: 600; }
   #modal-box input, #modal-box select {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    font-size: 1rem;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
     margin-bottom: 10px;
     outline: none;
+    background: var(--bg);
   }
-  #modal-box input:focus, #modal-box select:focus { border-color: #81d4fa; }
+  #modal-box input:focus, #modal-box select:focus { border-color: var(--accent); }
   .modal-btns { display: flex; gap: 8px; }
   .modal-btns button {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
+    flex: 1; padding: 12px; border: none; border-radius: 10px;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer;
   }
-  #modal-cancel { background: #e0e0e0; color: #555; }
-  #modal-ok { background: #81d4fa; color: #01579b; }
+  #modal-cancel { background: var(--border); color: var(--muted); }
+  #modal-ok { background: var(--accent); color: white; }
 
-  /* confetti burst */
+  /* ===== BURST ===== */
   .burst {
-    position: fixed;
-    pointer-events: none;
-    font-size: 2rem;
-    z-index: 200;
-    animation: burstAnim 0.7s forwards;
+    position: fixed; pointer-events: none; font-size: 1.4rem;
+    z-index: 200; animation: burstAnim 0.6s forwards;
   }
   @keyframes burstAnim {
     0%   { opacity: 1; transform: scale(0.5) translateY(0); }
-    80%  { opacity: 1; transform: scale(1.5) translateY(-40px); }
-    100% { opacity: 0; transform: scale(2) translateY(-80px); }
+    80%  { opacity: 1; transform: scale(1.3) translateY(-30px); }
+    100% { opacity: 0; transform: scale(1.6) translateY(-60px); }
   }
 </style>
 </head>
 <body>
 
-<h1>☀️ 夏休み 計画表 ☀️</h1>
+<header>
+  <div>
+    <h1>☀️ 夏休み 計画表</h1>
+    <div class="year">2026</div>
+  </div>
+</header>
 
 <!-- Progress -->
 <div id="progress-wrap">
-  <div id="progress-label">今日までの 達成状況</div>
+  <div class="progress-row">
+    <span class="progress-label">今日までの達成状況</span>
+    <span id="progress-count">0 / 0 個</span>
+  </div>
   <div id="progress-bar-outer"><div id="progress-bar-inner" style="width:0%"></div></div>
-  <div id="progress-count">0 / 0 こ</div>
 </div>
 
 <!-- Tabs -->
@@ -322,33 +338,32 @@
   <button class="tab-btn" id="tab-tasks" onclick="switchTab('tasks')">📋 やる事</button>
 </div>
 
-<!-- Calendar section -->
+<!-- Calendar -->
 <div id="section-calendar" class="section active">
   <div class="cal-card">
-    <div class="month-title">🌻 7月</div>
+    <div class="month-title">JULY · 7月</div>
     <div class="cal-grid" id="cal-july"></div>
   </div>
   <div class="cal-card">
-    <div class="month-title">🌊 8月</div>
+    <div class="month-title">AUGUST · 8月</div>
     <div class="cal-grid" id="cal-aug"></div>
   </div>
   <div class="cal-legend">
-    <span><span class="legend-dot" style="background:#a5d6a7"></span>達成！</span>
-    <span><span class="legend-dot" style="background:#ffe082;border:2px solid #f57c00"></span>今日</span>
-    <span><span class="legend-dot" style="background:#e3f2fd"></span>夏休み</span>
+    <span><span class="legend-swatch" style="background:var(--done-bg);border:1px solid var(--done-fg)"></span>達成</span>
+    <span><span class="legend-swatch" style="background:var(--accent)"></span>今日</span>
   </div>
 </div>
 
-<!-- Tasks section -->
+<!-- Tasks -->
 <div id="section-tasks" class="section">
   <div id="task-list"></div>
-  <button id="add-task-btn" onclick="openModal()">＋ やる事を 追加する</button>
+  <button id="add-task-btn" onclick="openModal()">＋ やる事を追加する</button>
 </div>
 
-<!-- Add Task Modal -->
+<!-- Modal -->
 <div id="modal-overlay">
   <div id="modal-box">
-    <h3>やる事を 追加 ✏️</h3>
+    <h3>やる事を追加</h3>
     <input id="modal-text" type="text" placeholder="例：自由研究" maxlength="30">
     <select id="modal-category">
       <option value="勉強">📚 勉強</option>
@@ -357,58 +372,50 @@
       <option value="楽しみ">🎉 楽しみ</option>
     </select>
     <div class="modal-btns">
-      <button id="modal-cancel" onclick="closeModal()">やめる</button>
-      <button id="modal-ok" onclick="addTask()">追加！</button>
+      <button id="modal-cancel" onclick="closeModal()">キャンセル</button>
+      <button id="modal-ok" onclick="addTask()">追加</button>
     </div>
   </div>
 </div>
 
 <script>
-// ========== DATA ==========
-const SUMMER_START = { july: 19, aug: 1 };
-const SUMMER_END   = { july: 31, aug: 31 };
+const SUMMER_START_JULY = 19;
 const TODAY = new Date();
 const TODAY_STR = `${TODAY.getFullYear()}-${String(TODAY.getMonth()+1).padStart(2,'0')}-${String(TODAY.getDate()).padStart(2,'0')}`;
 
 const CATEGORIES = {
-  '勉強': { color: '#bbdefb', titleColor: '#1565c0', emoji: '📚' },
-  '運動': { color: '#ffe0b2', titleColor: '#e65100', emoji: '🏃' },
-  '生活': { color: '#f3e5f5', titleColor: '#6a1b9a', emoji: '🏠' },
-  '楽しみ': { color: '#fce4ec', titleColor: '#880e4f', emoji: '🎉' },
+  '勉強': { emoji: '📚' },
+  '運動': { emoji: '🏃' },
+  '生活': { emoji: '🏠' },
+  '楽しみ': { emoji: '🎉' },
 };
 
 function loadData() {
   return JSON.parse(localStorage.getItem('summer2026') || '{"days":{},"tasks":[]}');
 }
-function saveData(d) {
-  localStorage.setItem('summer2026', JSON.stringify(d));
-}
+function saveData(d) { localStorage.setItem('summer2026', JSON.stringify(d)); }
 
 let data = loadData();
 
-// Default tasks
 if (data.tasks.length === 0) {
   data.tasks = [
-    { id: 1, text: '公文をやる', cat: '勉強', done: false },
+    { id: 1, text: '公文をやる',          cat: '勉強', done: false },
     { id: 2, text: 'CTP5 音読チャレンジ', cat: '勉強', done: false },
-    { id: 3, text: 'Kids Up', cat: '勉強', done: false },
-    { id: 4, text: 'スイミング', cat: '運動', done: false },
-    { id: 5, text: 'お手伝い 1つ', cat: '生活', done: false },
+    { id: 3, text: 'Kids Up',             cat: '勉強', done: false },
+    { id: 4, text: 'スイミング',           cat: '運動', done: false },
+    { id: 5, text: 'お手伝い 1つ',         cat: '生活', done: false },
   ];
   saveData(data);
 }
 
-// ========== CALENDAR ==========
-function isSummer(year, month, day) {
-  if (month === 7 && day >= SUMMER_START.july) return true;
-  if (month === 8) return true;
-  return false;
+// ===== CALENDAR =====
+function isSummer(month, day) {
+  return (month === 7 && day >= SUMMER_START_JULY) || month === 8;
 }
 
 function buildCalendar(containerId, year, month) {
   const container = document.getElementById(containerId);
-  const headers = ['日','月','火','水','木','金','土'];
-  headers.forEach((h,i) => {
+  ['日','月','火','水','木','金','土'].forEach(h => {
     const d = document.createElement('div');
     d.className = 'cal-header';
     d.textContent = h;
@@ -424,26 +431,22 @@ function buildCalendar(containerId, year, month) {
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const dayOfWeek = (firstDay + day - 1) % 7;
+    const dow = (firstDay + day - 1) % 7;
     const key = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    const isTodayDay = (key === TODAY_STR);
-    const summer = isSummer(year, month, day);
+    const summer = isSummer(month, day);
     const done = !!data.days[key];
+    const isToday = key === TODAY_STR;
 
     const el = document.createElement('div');
     el.className = 'cal-day';
-    if (!summer) el.style.color = '#ccc';
-    else if (done) el.classList.add('done');
-    else el.classList.add('summer');
-    if (isTodayDay) el.classList.add('today');
-    if (dayOfWeek === 0) el.classList.add('weekend-sun');
-    if (dayOfWeek === 6) el.classList.add('weekend-sat');
-
-    el.innerHTML = summer
-      ? `<div class="day-num">${day}</div><div class="check-mark">${done ? '⭐' : ''}</div>`
-      : `<div class="day-num" style="color:#ccc">${day}</div>`;
-
-    if (summer) {
+    if (!summer) { el.classList.add('not-summer'); el.innerHTML = `<span>${day}</span>`; }
+    else {
+      el.classList.add('summer');
+      if (done) el.classList.add('done');
+      if (isToday) el.classList.add('today');
+      if (dow === 0 && !done && !isToday) el.classList.add('weekend-sun');
+      if (dow === 6 && !done && !isToday) el.classList.add('weekend-sat');
+      el.innerHTML = `<span>${day}</span><span class="done-mark">${done ? '✓' : ''}</span>`;
       el.addEventListener('click', () => toggleDay(key, el));
     }
     container.appendChild(el);
@@ -453,71 +456,50 @@ function buildCalendar(containerId, year, month) {
 function toggleDay(key, el) {
   data.days[key] = !data.days[key];
   saveData(data);
-  if (data.days[key]) {
-    el.classList.remove('summer'); el.classList.add('done');
-    el.querySelector('.check-mark').textContent = '⭐';
-    burst(el);
-  } else {
-    el.classList.remove('done'); el.classList.add('summer');
-    el.querySelector('.check-mark').textContent = '';
-  }
+  const done = data.days[key];
+  el.classList.toggle('done', done);
+  el.querySelector('.done-mark').textContent = done ? '✓' : '';
+  if (done) burst(el);
   updateProgress();
 }
 
-// ========== TASKS ==========
+// ===== TASKS =====
 function renderTasks() {
   const container = document.getElementById('task-list');
   container.innerHTML = '';
   const catOrder = ['勉強','運動','生活','楽しみ'];
   catOrder.forEach(cat => {
     const items = data.tasks.filter(t => t.cat === cat);
-    if (items.length === 0) return;
-    const cfg = CATEGORIES[cat];
+    if (!items.length) return;
     const doneCount = items.filter(t => t.done).length;
-
     const catDiv = document.createElement('div');
     catDiv.className = 'task-category';
-
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'cat-title';
-    titleDiv.style.background = cfg.color;
-    titleDiv.style.color = cfg.titleColor;
-    titleDiv.innerHTML = `${cfg.emoji} ${cat} <span class="cat-count">${doneCount}/${items.length}</span>`;
-    catDiv.appendChild(titleDiv);
-
+    catDiv.innerHTML = `<div class="cat-title">${CATEGORIES[cat].emoji} ${cat}<span class="cat-count">${doneCount}/${items.length}</span></div>`;
     items.forEach(task => {
       const item = document.createElement('div');
       item.className = 'task-item' + (task.done ? ' done' : '');
-      item.innerHTML = `
-        <div class="task-check">${task.done ? '✓' : ''}</div>
-        <div class="task-text">${task.text}</div>
-      `;
-      item.addEventListener('click', () => toggleTask(task.id, item));
+      item.innerHTML = `<div class="task-check">${task.done ? '✓' : ''}</div><div class="task-text">${task.text}</div>`;
+      item.addEventListener('click', () => toggleTask(task.id));
       catDiv.appendChild(item);
     });
-
     container.appendChild(catDiv);
   });
 }
 
-function toggleTask(id, el) {
+function toggleTask(id) {
   const task = data.tasks.find(t => t.id === id);
   if (!task) return;
   task.done = !task.done;
   saveData(data);
   if (task.done) {
-    el.classList.add('done');
-    el.querySelector('.task-check').textContent = '✓';
-    burst(el);
-  } else {
-    el.classList.remove('done');
-    el.querySelector('.task-check').textContent = '';
+    const items = document.querySelectorAll('.task-item');
+    items.forEach(el => { if (el.querySelector('.task-text')?.textContent === task.text) burst(el); });
   }
   renderTasks();
   updateProgress();
 }
 
-// ========== PROGRESS ==========
+// ===== PROGRESS =====
 function updateProgress() {
   const total = data.tasks.length;
   const done  = data.tasks.filter(t => t.done).length;
@@ -526,21 +508,18 @@ function updateProgress() {
   document.getElementById('progress-count').textContent = `${done} / ${total} 個 (${pct}%)`;
 }
 
-// ========== MODAL ==========
+// ===== MODAL =====
 function openModal() {
   document.getElementById('modal-text').value = '';
   document.getElementById('modal-overlay').classList.add('show');
   setTimeout(() => document.getElementById('modal-text').focus(), 200);
 }
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('show');
-}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
 function addTask() {
   const text = document.getElementById('modal-text').value.trim();
   const cat  = document.getElementById('modal-category').value;
   if (!text) return;
-  const id = Date.now();
-  data.tasks.push({ id, text, cat, done: false });
+  data.tasks.push({ id: Date.now(), text, cat, done: false });
   saveData(data);
   renderTasks();
   updateProgress();
@@ -550,7 +529,7 @@ document.getElementById('modal-overlay').addEventListener('click', e => {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 });
 
-// ========== TABS ==========
+// ===== TABS =====
 function switchTab(tab) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -558,25 +537,23 @@ function switchTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
 }
 
-// ========== BURST EFFECT ==========
+// ===== BURST =====
 function burst(el) {
   const rect = el.getBoundingClientRect();
-  const cx = rect.left + rect.width/2;
-  const cy = rect.top + rect.height/2;
-  const emojis = ['⭐','🎉','✨','🌟','🎊'];
-  emojis.forEach((e,i) => {
+  const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+  ['⭐','✨','🎉'].forEach((e,i) => {
     const div = document.createElement('div');
     div.className = 'burst';
     div.textContent = e;
-    div.style.left = (cx + (Math.random()-0.5)*60) + 'px';
-    div.style.top  = (cy + (Math.random()-0.5)*40) + 'px';
-    div.style.animationDelay = (i*0.05) + 's';
+    div.style.left = (cx + (Math.random()-0.5)*50) + 'px';
+    div.style.top  = (cy + (Math.random()-0.5)*30) + 'px';
+    div.style.animationDelay = (i*0.07) + 's';
     document.body.appendChild(div);
-    setTimeout(() => div.remove(), 800);
+    setTimeout(() => div.remove(), 700);
   });
 }
 
-// ========== INIT ==========
+// ===== INIT =====
 buildCalendar('cal-july', 2026, 7);
 buildCalendar('cal-aug',  2026, 8);
 renderTasks();
